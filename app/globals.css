@@ -1,0 +1,340 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Maren design tokens
+   Palette: Desert Dusk. Rose is the single accent: primary CTA,
+   the sun, italic emphasis. Sage is quiet support only.
+   ------------------------------------------------------------------ */
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-stone: #f3ece6;
+  --color-stone-2: #ebe1d9;
+  --color-stone-3: #e0d2c7;
+  --color-line: #d8c8bd;
+  --color-field: #8f7a7d; /* input borders, 3.4:1 on stone */
+  --color-ink: #2b1f22;
+  --color-ink-2: #4a3a3d;
+  --color-muted: #6e5b5e; /* 5.4:1 on stone */
+  --color-rose: #9c5f66; /* large text and art only */
+  --color-rose-deep: #84464e; /* CTA fill and small accent text, 6:1 */
+  --color-rose-soft: #ead6d2;
+  --color-rose-light: #dcaab0; /* accent on ink */
+  --color-sage: #a9b4a1;
+  --color-sage-deep: #5f6c5a;
+  --color-sage-soft: #dfe3d8;
+  --color-error: #a3312b;
+
+  /* Illustration only (dusk scene) */
+  --color-sun: #f6e0cb;
+  --color-peach: #e9b9a2;
+  --color-coral: #d4968c;
+  --color-mauve: #a8797f;
+  --color-plum: #6e4a55;
+  --color-night: #4a333b;
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type scale */
+  --text-wordmark: clamp(5.25rem, 1.5rem + 17vw, 11.5rem);
+  --text-wordmark--line-height: 0.82;
+  --text-display-xl: clamp(3.25rem, 1.75rem + 6vw, 7.25rem);
+  --text-display-xl--line-height: 0.92;
+  --text-display-xl--letter-spacing: -0.015em;
+  --text-display-l: clamp(2.6rem, 1.7rem + 3.8vw, 5.25rem);
+  --text-display-l--line-height: 0.98;
+  --text-display-l--letter-spacing: -0.012em;
+  --text-display-m: clamp(2.125rem, 1.6rem + 2.2vw, 3.625rem);
+  --text-display-m--line-height: 1.02;
+  --text-display-m--letter-spacing: -0.008em;
+  --text-display-s: clamp(1.625rem, 1.35rem + 1.1vw, 2.25rem);
+  --text-display-s--line-height: 1.1;
+  --text-lead: clamp(1.125rem, 1.05rem + 0.3vw, 1.3125rem);
+  --text-lead--line-height: 1.6;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65;
+  --text-small: 0.9375rem;
+  --text-small--line-height: 1.55;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.16em;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 1px 0 rgb(43 31 34 / 0.04), 0 18px 40px -24px rgb(43 31 34 / 0.28);
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-dawn: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 200ms;
+  --duration-base: 400ms;
+  --duration-slow: 600ms;
+}
+
+:root {
+  --ring: var(--color-rose-deep);
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-stone);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+}
+
+.on-dark {
+  --ring: var(--color-rose-light);
+}
+
+::selection {
+  background: var(--color-rose-soft);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.container-x {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+@media (min-width: 768px) {
+  .container-x {
+    padding-inline: 32px;
+  }
+}
+@media (min-width: 1280px) {
+  .container-x {
+    padding-inline: 56px;
+  }
+}
+
+.eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: var(--text-eyebrow--line-height);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Display italics carry the accent */
+.display-em {
+  font-style: italic;
+  color: var(--color-rose);
+}
+.on-dark .display-em {
+  color: var(--color-rose-light);
+}
+
+/* Arch frame: the brand shape */
+.arch {
+  border-radius: 999px 999px 0 0;
+  overflow: hidden;
+}
+
+/* Link underline that settles in from the left */
+.link-draw {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size var(--duration-base) var(--ease-soft);
+}
+.link-draw:hover,
+.link-draw[aria-current="page"] {
+  background-size: 100% 1px;
+}
+
+/* ------------------------------------------------------------------
+   Masked line reveal. Runs on load by default (CSS only).
+   ------------------------------------------------------------------ */
+@keyframes rise {
+  from {
+    transform: translate3d(0, 108%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mask-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.mask-line > span {
+  display: block;
+  animation: rise 1000ms var(--ease-soft) both;
+  animation-delay: calc(var(--i, 0) * 90ms + var(--d, 80ms));
+}
+
+/* Scroll reveals, toggled by <InView>. Each variant moves differently. */
+html.js [data-reveal="mask"] .mask-line > span {
+  animation: none;
+  transform: translate3d(0, 108%, 0);
+  transition: transform 1000ms var(--ease-soft);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+html.js [data-reveal="mask"][data-inview="true"] .mask-line > span {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Unveil: a stone panel lifts off the artwork like a curtain */
+[data-reveal="unveil"] {
+  position: relative;
+}
+html.js [data-reveal="unveil"]::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: var(--veil, var(--color-stone));
+  transform-origin: top;
+  transition: transform 1200ms var(--ease-dawn);
+  transition-delay: var(--d, 0ms);
+  pointer-events: none;
+}
+html.js [data-reveal="unveil"][data-inview="true"]::after {
+  transform: translate3d(0, -101%, 0);
+}
+
+/* Rule: hairlines that draw across */
+html.js [data-reveal="rule"] .rule {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1100ms var(--ease-soft);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+html.js [data-reveal="rule"][data-inview="true"] .rule {
+  transform: scaleX(1);
+}
+
+/* ------------------------------------------------------------------
+   Signature: Sunrise arch intro (home hero). ~3.4s, CSS only so it
+   starts on first paint. Replay remounts the subtree.
+   ------------------------------------------------------------------ */
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes sunrise {
+  from {
+    transform: translate3d(0, 46%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--from, 18px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes open-arch {
+  from {
+    transform: scale(0.84);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes dawn-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.intro-arch {
+  transform-origin: 50% 100%;
+  animation: open-arch 1500ms var(--ease-dawn) 1900ms both;
+}
+.intro-line {
+  stroke-dasharray: 1;
+  animation: draw 1300ms var(--ease-dawn) 100ms both;
+}
+.intro-echo {
+  stroke-dasharray: 1;
+  animation: draw 1400ms var(--ease-dawn) 2500ms both;
+}
+.intro-scene {
+  animation: fade 700ms ease-out 450ms both;
+}
+.intro-night {
+  animation: dawn-out 2000ms var(--ease-dawn) 900ms both;
+}
+.intro-sun {
+  animation: sunrise 2300ms var(--ease-soft) 700ms both;
+}
+.intro-ridge {
+  animation: settle 1400ms var(--ease-soft) both;
+  animation-delay: var(--d, 1200ms);
+}
+.intro-letter {
+  display: inline-block;
+  animation: rise 1100ms var(--ease-soft) both;
+  animation-delay: calc(2050ms + var(--i, 0) * 75ms);
+}
+.intro-fade {
+  animation: fade 900ms ease-out both;
+  animation-delay: var(--d, 2900ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+  html.js [data-reveal="mask"] .mask-line > span,
+  html.js [data-reveal="rule"] .rule {
+    transform: none;
+  }
+  html.js [data-reveal="unveil"]::after {
+    display: none;
+  }
+}
